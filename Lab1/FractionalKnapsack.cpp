@@ -12,9 +12,9 @@ bool comparator(Item A, Item B)
 	
 };
 
-int kanpSack(Item data[], int size, int maxWeight) 
+int knapSack(Item data[], int size, int maxWeight)
 {
-	sort(data,data+size);
+	sort(data,data+size,comparator);
 	return 0 ;
 }
 
@@ -26,7 +26,7 @@ int main()
 
 	int maxWeight = 50 ;
 	
-	int maxValue = kanpSack(data,n,maxWeight) ;
+	int maxValue = knapSack(data,n,maxWeight) ;
 	
 	cout << "maxValue :" << maxValue ;
 	
