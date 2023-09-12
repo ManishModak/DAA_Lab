@@ -29,7 +29,7 @@ void printArr(int data[],int V)
 	cout<<"Vertex        Dist From Source" ;
 	for(int i = 0 ; i < V ; i++)
 	{
-		cout<< "\n" << i << "\t" << data[i] ;
+		cout<< "\n" << i << "\t\t" << data[i] ;
 	}
 }
 
@@ -106,3 +106,76 @@ int main()
 	
 	return 0 ;
 }
+
+
+
+OUTPUT
+--------------------------------------------------------------------------------------------------------------------------------
+
+student@studentg++ bellman-ford.cpp 
+student@student:~$ ./a.out
+
+Enter The No of Vertices: 6
+
+Enter The No. Edges: 9
+
+Enter Source of 0 Edge: 0
+
+Enter dest of 0 Edge: 1
+
+Enter weight of 0 Edge: 6
+
+Enter Source of 1 Edge: 0
+
+Enter dest of 1 Edge: 2
+
+Enter weight of 1 Edge: 4
+
+Enter Source of 2 Edge: 0
+
+Enter dest of 2 Edge: 3
+
+Enter weight of 2 Edge: 5
+
+Enter Source of 3 Edge: 2
+
+Enter dest of 3 Edge: 1
+
+Enter weight of 3 Edge: -2
+
+Enter Source of 4 Edge: 2
+
+Enter dest of 4 Edge: 4
+
+Enter weight of 4 Edge: 3
+
+Enter Source of 5 Edge: 3
+
+Enter dest of 5 Edge: 2
+
+Enter weight of 5 Edge: -2
+
+Enter Source of 6 Edge: 3
+
+Enter dest of 6 Edge: 5
+
+Enter weight of 6 Edge: -1
+
+Enter Source of 7 Edge: 1
+
+Enter dest of 7 Edge: 4
+
+Enter weight of 7 Edge: -1
+
+Enter Source of 8 Edge: 4
+
+Enter dest of 8 Edge: 5
+
+Enter weight of 8 Edge: 3
+Vertex        Dist From Source
+0		0
+1		1
+2		3
+3		5
+4		0
+5		3
