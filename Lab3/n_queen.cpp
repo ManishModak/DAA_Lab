@@ -1,104 +1,81 @@
 #include<iostream>
-#define N 4
-using namespace std ;
+#include<vector>
+using namespace std;
 
-bool isSafe(int board[N][N],int row,int column) {
-    int i , j ;
+bool isSafe(vector<vector<int>>& board, int row, int column, int N) {
+    int i, j;
 
-    //Same Row
-    for(i = 0 ; i < column ; i++) {
-        if(board[row][i]) {
-            return false ;
+    // Same Row
+    for (i = 0; i < column; i++) {
+        if (board[row][i]) {
+            return false;
         }
     }
 
-    //Upper Diagonal
-    for(i = row , j = column ; i >= 0 && j >= 0 ; i-- , j--) {
-        if(board[i][j]) {
-            return false ;
+    // Upper Diagonal
+    for (i = row, j = column; i >= 0 && j >= 0; i--, j--) {
+        if (board[i][j]) {
+            return false;
         }
     }
 
-    //Lower Diagonal
-    for(i = row , j = column ; i < N && j >= 0 ; i++ , j--) {
-        if(board[i][j]) {
-            return false ;
+    // Lower Diagonal
+    for (i = row, j = column; i < N && j >= 0; i++, j--) {
+        if (board[i][j]) {
+            return false;
         }
     }
 
-    return true ;
+    return true;
 }
 
-void printSolution(int board[N][N]) {
-
-    for(int i = 0 ; i < N ; i++) 
-    {
-        for(int j = 0 ; j < N ; j++) 
-        {
-            if(board[i][j]) {
-                cout << "Q" << " " ;
+void printSolution(const vector<vector<int>>& board) {
+    static int solutionCount = 0;
+    cout << "Solution " << ++solutionCount << ":" << endl;
+    for (const vector<int>& row : board) {
+        for (int cell : row) {
+            if (cell) {
+                cout << "Q ";
             } else {
-                cout << "." << " " ;
+                cout << ". ";
             }
         }
-
-        cout<< "\n" << endl ;
+        cout << "\n";
     }
 }
 
-bool nQueenAlgo(int board[N][N],int column) {
-
-    if(column >= N) {
-        return true ;
+bool nQueenAlgo(vector<vector<int>>& board, int column, int N) {
+    if (column >= N) {
+        printSolution(board);
+        return true;
     }
 
-    for(int i = 0 ; i < N ; i++) 
-    {
-        if(isSafe(board,i,column)) {
+    bool foundSolution = false;
 
-            board[i][column] = 1 ;
-
-            if(nQueenAlgo(board,column+1) == true) {
-                return true ;
-            }
-
-            board[i][column] = 0 ;
+    for (int i = 0; i < N; i++) {
+        if (isSafe(board, i, column, N)) {
+            board[i][column] = 1;
+            foundSolution = nQueenAlgo(board, column + 1, N) || foundSolution;
+            board[i][column] = 0;
         }
     }
 
-    return false ;
+    return foundSolution;
 }
 
 int main() {
+    int size;
+    cout << "Enter Size of Board: ";
+    cin >> size;
 
-    int board[N][N] = { {0,0,0,0},
-                        {0,0,0,0},
-                        {0,0,0,0},
-                        {0,0,0,0} } ;
+    int N = size;
 
-    if(nQueenAlgo(board,0) == false) {
-        cout << "Solution doesn't Exist " << endl ;
-    } else {
-        printSolution(board) ;
+    // Create a 2D vector to represent the chessboard
+    vector<vector<int>> board(N, vector<int>(N, 0));
+
+    if (!nQueenAlgo(board, 0, N)) {
+        cout << "No solutions exist." << endl;
     }
 
-    return 0 ;
+    return 0;
 }
-
-
-
-/*
-
-OutPut 
-...............................
-
-. . Q . 
-
-Q . . .
-
-. . . Q
-
-. Q . .
-
-
-*/

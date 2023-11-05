@@ -3,50 +3,81 @@ using namespace std ;
 
 struct Item 
 {
-	double value ;
+	double profit ;
 	double weight ;
+	int index ;
 };
 
 bool comparator(Item A, Item B)
 {
-	double ratio1 = (double)A.value/(double)A.weight ;
-	double ratio2 = (double)B.value/(double)B.weight ;
-	return ratio1 > ratio2 ;
+	double ratio1 = (double)A.profit/(double)A.weight ;
+	double ratio2 = (double)B.profit/(double)B.weight ;
+	return ratio1 > ratio2 ; // returns true if R1 > R2 
 };
 
 int knapSack(Item data[], int size, int maxWeight)
 {
-	sort(data,data+size,comparator);
+
+    Item sortedData[size];
+    for (int i = 0; i < size; i++)
+    {
+        sortedData[i] = data[i];
+    }
+
+    sort(sortedData, sortedData + size, comparator); //Sorting using custom comparator
 
 	double maxValue = 0.0 ;
+
+	cout << "Selected Items" << endl ;
 
 	for(int i = 0 ; i < size ; i++)
 	{
 		if(data[i].weight < maxWeight)
 		{
 			maxWeight -=  data[i].weight ;
-			maxValue += data[i].value ;
+			maxValue += data[i].profit ;
+			cout << "Item index: " << data[i].index << ", profit: " << data[i].profit << ", Quantity: 1" << endl;
 		}
 		else
 		{
-			maxValue += data[i].value*(maxWeight/data[i].weight) ;
+			double fractionalQuantity = (double)maxWeight/(double)data[i].weight ;
+			double fractionalProfitValue = (double)data[i].profit*fractionalQuantity ;
+
+			maxValue += fractionalProfitValue ;
+
+			cout << "Item index: " << data[i].index << ", profit: " << fractionalProfitValue << ", Quantity: " << fractionalQuantity << endl;
 		}
 	}
 
-	return maxValue ;
+	cout << "Max profit: " << maxValue ;
 }
 
 int main()
 {
-	Item data[] = {{100, 20}, {60, 10}, {120, 30}} ;
+	int size ;
 
-	int n = sizeof(data)/sizeof(data[0]) ;
+	cout << "Enter No. of Items: "  ;
+	cin >> size ;
 
-	int maxWeight = 50 ;
+	Item data[size] ;
+
+	for (int i = 0; i < size; i++)
+	{
+		cout << "Enter the " << i << "th item profit Value: " ;
+		cin >> data[i].profit ;
+
+		cout << "Enter the " << i << "th item weight Value: " ;
+		cin >> data[i].weight ;
+
+		data[i].index = i ;
+	}
+
+	int maxWeight = 0 ;
+
+	cout << "Enter the max weight: " ;
+	cin >> maxWeight ;
 	
-	int maxValue = knapSack(data,n,maxWeight) ;
-	
-	cout << "maxValue: " << maxValue ;
-	
+	knapSack(data,size,maxWeight) ;
+
 	return 0 ;
 }

@@ -23,14 +23,15 @@ struct Graph* createGraph(int V,int E)
 	return graph ;
 };
 
-
 void printArr(int data[],int V)
 {
-	cout<<"Vertex        Dist From Source" ;
-	for(int i = 0 ; i < V ; i++)
+
+	for (int i = 0; i < V; i++)
 	{
-		cout<< "\n" << i << "\t\t" << data[i] ;
+		cout << "\t" << data[i] ;
 	}
+
+	cout << "\n" ;
 }
 
 void bellmanFord(struct Graph* graph,int source) 
@@ -45,8 +46,12 @@ void bellmanFord(struct Graph* graph,int source)
 	}
 	dist[source] = 0;
 	
-	for(int i = 0 ; i < V-1 ; i++)
+	int i = 0 ;
+
+	for(i = 0 ; i < V-1 ; i++)
 	{
+		cout << "Iteration " << i << ": " ;
+		printArr(dist,V) ;
 		for(int j = 0 ; j < E ; j++)
 		{
 			int u = graph->edge[j].source ;
@@ -60,7 +65,7 @@ void bellmanFord(struct Graph* graph,int source)
 		} 
 	}
 	
-	for(int i = 0 ; i < E ; i++)
+	for(int j = 0 ; j < E ; j++)
 	{
 		int u = graph->edge[i].source ;
 		int v = graph->edge[i].dest ;
@@ -69,10 +74,13 @@ void bellmanFord(struct Graph* graph,int source)
 		if(dist[u] != INT_MAX && dist[u]+weight < dist[v])
 		{
 			cout<<"Graph Has Negative Cycle" ;
+			cout << "Final Iteration: " ;
+			printArr(dist,V) ;
 			return ;
 		}
 	}	
 	
+	cout << "Final Iteration: " ;
 	printArr(dist,V) ;
 	return ;
 }
