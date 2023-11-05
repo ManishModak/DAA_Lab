@@ -32,21 +32,22 @@ int knapSack(Item data[], int size, int maxWeight)
 
 	for(int i = 0 ; i < size ; i++)
 	{
-		if(data[i].weight < maxWeight)
-		{
-			maxWeight -=  data[i].weight ;
-			maxValue += data[i].profit ;
+		if (data[i].weight <= maxWeight) {
+			maxWeight -= data[i].weight;
+			maxValue += data[i].profit;
 			cout << "Item index: " << data[i].index << ", profit: " << data[i].profit << ", Quantity: 1" << endl;
-		}
-		else
-		{
-			double fractionalQuantity = (double)maxWeight/(double)data[i].weight ;
-			double fractionalProfitValue = (double)data[i].profit*fractionalQuantity ;
+		} else {
+			double fractionalQuantity = (double)maxWeight / (double)data[i].weight;
+			double fractionalProfitValue = ((double)data[i].profit) * ((double)fractionalQuantity);
 
-			maxValue += fractionalProfitValue ;
+			maxValue += fractionalProfitValue;
 
 			cout << "Item index: " << data[i].index << ", profit: " << fractionalProfitValue << ", Quantity: " << fractionalQuantity << endl;
+
+			// Break the loop as the knapsack is full
+			break;
 		}
+
 	}
 
 	cout << "Max profit: " << maxValue ;
